@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Schedule - Reyajul Hasan Leon</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Full-screen background */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background-color: #1e1e1e;
+            overflow: hidden;
+            color: #d4d4d4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Clock and Calendar Container */
+        .widget-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 30px;
+        }
+
+        /* Modern Clock Design */
+        .clock {
+            font-size: 2.5em;
+            font-weight: 300;
+            color: #ffffff;
+            background-color: #007acc;
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Modern Calendar Design */
+        .calendar-container {
+            padding: 15px;
+            background-color: #252526;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            color: #ffffff;
+        }
+
+        .calendar-container h2 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+            text-align: center;
+            color: #569cd6;
+        }
+
+        .calendar-container table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #d4d4d4;
+        }
+
+        .calendar-container th, .calendar-container td {
+            padding: 10px;
+            border: 1px solid #3c3c3c;
+            text-align: center;
+        }
+
+        .calendar-container th {
+            background-color: #007acc;
+            color: white;
+        }
+
+        .calendar-container td {
+            background-color: #2d2d2d;
+            transition: background-color 0.3s ease;
+        }
+
+        .calendar-container td:hover {
+            background-color: #007acc;
+            color: #fff;
+        }
+
+        .current-day {
+            background-color: #569cd6;
+            color: white;
+            font-weight: bold;
+            border-radius: 50%;
+        }
+
+        /* Centered Main Content */
+        .main-content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #569cd6;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .math-header {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #ce9178;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Academic Schedule - Reyajul Hasan Leon</h1>
+    <div class="math-header">
+        \[ \frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2S^2\frac{\partial^2 V}{\partial S^2} + rS\frac{\partial V}{\partial S} - rV = 0 \]
+    </div>
+
+    <div class="widget-container">
+        <!-- Modern Clock -->
+        <div class="clock" id="clock"></div>
+
+        <!-- Modern Calendar -->
+        <div class="calendar-container">
+            <h2>Calendar</h2>
+            <table id="calendar">
+                <!-- Calendar will be generated here -->
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Clock Script
+        function updateClock() {
+            const clock = document.getElementById('clock');
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            clock.innerHTML = `${hours}:${minutes}:${seconds}`;
+        }
+
+        setInterval(updateClock, 1000); // Update the clock every second
+        updateClock(); // Initial call to set the clock
+
+        // Calendar Script
+        function generateCalendar() {
+            const calendar = document.getElementById('calendar');
+            const now = new Date();
+            const month = now.getMonth();
+            const year = now.getFullYear();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // Get the day of the week of the first day of the month
+            const firstDay = new Date(year, month, 1).getDay();
+
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+            // Header
+            let calendarHTML = `<tr><th colspan="7">${monthNames[month]} ${year}</th></tr>`;
+            calendarHTML += '<tr>';
+            dayNames.forEach(day => {
+                calendarHTML += `<th>${day}</th>`;
+            });
+            calendarHTML += '</tr>';
+
+            // Days
+            let day = 1;
+            let rows = 6; // 6 rows to cover all possible weeks in a month
+            let cols = 7; // 7 columns for 7 days
+            for (let i = 0; i < rows; i++) {
+                calendarHTML += '<tr>';
+                for (let j = 0; j < cols; j++) {
+                    if (i === 0 && j < firstDay) {
+                        calendarHTML += '<td></td>'; // Empty cell before the first day
+                    } else if (day > daysInMonth) {
+                        calendarHTML += '<td></td>'; // Empty cell after the last day
+                    } else {
+                        const isToday = day === now.getDate() ? 'current-day' : '';
+                        calendarHTML += `<td class="${isToday}">${day}</td>`;
+                        day++;
+                    }
+                }
+                calendarHTML += '</tr>';
+                if (day > daysInMonth) break; // Stop loop if we've reached the end of the month
+            }
+
+            calendar.innerHTML = calendarHTML;
+        }
+
+        generateCalendar(); // Initial call to generate the calendar
+    </script>
+</body>
+</html>
