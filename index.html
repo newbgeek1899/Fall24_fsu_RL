@@ -8,68 +8,27 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Full-screen background */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Roboto', sans-serif;
-            background-color: #1e1e1e;
-            overflow: hidden;
-            color: #d4d4d4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        /* Clock and Calendar Container */
-        .widget-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 50px;
-            margin-bottom: 30px;
-        }
-
-        /* Modern Clock Design */
-        .clock {
-            font-size: 2.5em;
-            font-weight: 300;
-            color: #ffffff;
-            background-color: #007acc;
-            padding: 15px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Modern Calendar Design */
-        .calendar-container {
-            padding: 15px;
-            background-color: #252526;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            color: #ffffff;
-        }
-
-        .calendar-container h2 {
-            margin-bottom: 10px;
-            font-size: 1.5em;
+        /* Styling for the clock and calendar */
+        .clock-container {
             text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em;
             color: #569cd6;
+        }
+
+        .calendar-container {
+            margin: 0 auto;
+            text-align: center;
+            color: #d4d4d4;
         }
 
         .calendar-container table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
             color: #d4d4d4;
+            background-color: #252526;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .calendar-container th, .calendar-container td {
@@ -85,31 +44,37 @@
 
         .calendar-container td {
             background-color: #2d2d2d;
-            transition: background-color 0.3s ease;
-        }
-
-        .calendar-container td:hover {
-            background-color: #007acc;
-            color: #fff;
         }
 
         .current-day {
             background-color: #569cd6;
             color: white;
             font-weight: bold;
-            border-radius: 50%;
         }
 
-        /* Centered Main Content */
-        .main-content {
-            text-align: center;
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #d4d4d4;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
+            background-color: #1e1e1e;
+            animation: fadeIn 2s ease;
         }
 
-        h1 {
+        h1, h2 {
             color: #569cd6;
-            font-size: 3em;
-            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            padding-bottom: 10px;
+            animation: slideIn 1s ease-out;
         }
 
         .math-header {
@@ -118,8 +83,70 @@
             margin-bottom: 20px;
             font-style: italic;
             color: #ce9178;
+            animation: slideIn 1.5s ease-out;
         }
 
+        /* VS Code-like container with shadow */
+        #scheduleOutput, .math-container {
+            background-color: #252526;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease-out;
+            color: #d4d4d4;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #3c3c3c;
+        }
+
+        th {
+            background-color: #007acc;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #2d2d2d;
+        }
+
+        tr:hover {
+            background-color: #3e3e3e;
+        }
+
+        /* Buttons with VS Code styles */
+        select, button {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        select:hover, button:hover {
+            background-color: #005f99;
+            transform: scale(1.05);
+        }
+
+        /* Reminder button styling */
+        .reminder-container {
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -128,17 +155,43 @@
         \[ \frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2S^2\frac{\partial^2 V}{\partial S^2} + rS\frac{\partial V}{\partial S} - rV = 0 \]
     </div>
 
-    <div class="widget-container">
-        <!-- Modern Clock -->
-        <div class="clock" id="clock"></div>
+    <!-- Clock Container -->
+    <div class="clock-container">
+        <div id="clock"></div>
+    </div>
 
-        <!-- Modern Calendar -->
-        <div class="calendar-container">
-            <h2>Calendar</h2>
-            <table id="calendar">
-                <!-- Calendar will be generated here -->
-            </table>
-        </div>
+    <!-- Calendar Container -->
+    <div class="calendar-container">
+        <h2>Calendar</h2>
+        <table id="calendar">
+            <!-- Calendar will be generated here -->
+        </table>
+    </div>
+
+    <!-- Reminder Button -->
+    <div class="reminder-container">
+        <button onclick="remindMe()">Reminder: Check Your Mail</button>
+    </div>
+
+    <div id="scheduleSelector">
+        <select id="viewSelect">
+            <option value="day">Daily View</option>
+            <option value="week">Week Overview</option>
+        </select>
+        <select id="daySelect">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+        </select>
+        <button onclick="showSchedule()">Display Schedule</button>
+    </div>
+
+    <div id="scheduleOutput"></div>
+
+    <div class="footnote">
+        "In mathematics you don't understand things. You just get used to them." - John von Neumann
     </div>
 
     <script>
@@ -202,6 +255,131 @@
         }
 
         generateCalendar(); // Initial call to generate the calendar
+
+        // Reminder Script
+        let reminderInterval;
+
+        function remindMe() {
+            // Open Outlook in a new tab
+            window.open('https://outlook.office365.com/mail/', '_blank');
+
+            // Request Notification permission
+            if (Notification.permission === "default") {
+                Notification.requestPermission();
+            }
+
+            // Set up periodic reminders
+            if (!reminderInterval) {
+                reminderInterval = setInterval(() => {
+                    if (Notification.permission === "granted") {
+                        new Notification("Reminder: Check your email!");
+                    }
+                }, 60000); // Remind every minute
+            }
+        }
+
+        // Schedule Script (existing functionality)
+        const schedule = {
+            Monday: [
+                { time: "9:20 - 10:10", activity: "MAP 5601: Intro to Financial Math", location: "Love 231", type: "Class" },
+                { time: "10:40 - 11:30", activity: "MAD 5403: FCM I", location: "Love 106", type: "Class" },
+                { time: "1:20 - 2:35", activity: "MAC2233 Lect 8 (TA Duty)", location: "104MOR", type: "TA", professor: "Dr. Watford", fellows: ["Prakash, Siddharth", "Parsizadeh, Pejman"] },
+                { time: "6:35 - 7:25", activity: "MAT 5939-02: Fin Math Proseminar", location: "Love", type: "Class" }
+            ],
+            Tuesday: [
+                { time: "11:35 - 12:50", activity: "STA 6346: Advanced Probability & Inference", location: "OSB 110", type: "Class" },
+                { time: "3:05 - 4:20", activity: "MAT 5939-01: Fin Math Proseminar", location: "Love 105", type: "Class" },
+                { time: "4:50 - 6:05", activity: "MAC1140 Lect 21 (TA Duty)", location: "2100HWC", type: "TA", professor: "Dr. Schillinger", fellows: ["Reid, Callie"] }
+            ],
+            Wednesday: [
+                { time: "8:00 - 8:50", activity: "MAC1140 Lab 13 (TA Duty)", location: "114HTL", type: "TA", professor: "Dr. Wilk", fellows: ["Jennetten, Gustav (Gus)"] },
+                { time: "9:20 - 10:10", activity: "MAP 5601: Intro to Financial Math", location: "Love 231", type: "Class" },
+                { time: "10:40 - 11:30", activity: "MAD 5403: FCM I", location: "Love 106", type: "Class" },
+                { time: "1:20 - 2:10", activity: "MAC1140 Lab 26 (TA Duty)", location: "107MCH", type: "TA", professor: "Dr. Schillinger", fellows: ["Ohanian, Charles"] },
+                { time: "3:05 - 3:55", activity: "MAC1140 Lab 27 (TA Duty)", location: "107MCH", type: "TA", professor: "Dr. Schillinger", fellows: ["Ohanian, Charles"] }
+            ],
+            Thursday: [
+                { time: "11:35 - 12:50", activity: "STA 6346: Advanced Probability & Inference", location: "OSB 110", type: "Class" },
+                { time: "1:00 - 2:00", activity: "Office Hours", location: "TBA", type: "Office Hours" }
+            ],
+            Friday: [
+                { time: "8:00 - 8:50", activity: "MAC2233 Lab 10 (TA Duty)", location: "105HTL", type: "TA", professor: "Dr. Watford", fellows: ["Lyu, Shiyi"] },
+                { time: "9:20 - 10:10", activity: "MAP 5601: Intro to Financial Math", location: "Love 231", type: "Class" },
+                { time: "10:40 - 11:30", activity: "MAD 5403: FCM I", location: "Love 106", type: "Class" },
+                { time: "12:00 - 12:50", activity: "MAC2233 Lab 15 (TA Duty)", location: "104HTL", type: "TA", professor: "Dr. Watford", fellows: ["Heeralu Pathirannehelage, Samadhi Lochana Premasiri"] },
+                { time: "1:20 - 2:10", activity: "MAC2233 Lab 17 (TA Duty)", location: "104HTL", type: "TA", professor: "Dr. Watford", fellows: ["Hill, Devan"] },
+                { time: "3:00 - 4:00", activity: "Office Hours", location: "TBA", type: "Office Hours" }
+            ]
+        };
+
+        function showSchedule() {
+            const viewType = document.getElementById('viewSelect').value;
+            const day = document.getElementById('daySelect').value;
+            const output = document.getElementById('scheduleOutput');
+
+            if (viewType === 'day') {
+                showDaySchedule(day, output);
+            } else {
+                showWeekOverview(output);
+            }
+        }
+
+        function showDaySchedule(day, output) {
+            const daySchedule = schedule[day];
+
+            if (daySchedule && daySchedule.length > 0) {
+                let scheduleHTML = `<h2>Schedule for ${day}</h2><table>`;
+                scheduleHTML += '<tr><th>Time</th><th>Activity</th><th>Location</th><th>Professor</th><th>Fellow TAs</th></tr>';
+                
+                daySchedule.forEach(item => {
+                    let professorCell = item.professor || '';
+                    let fellowsCell = item.fellows ? item.fellows.join(', ') : '';
+                    scheduleHTML += `<tr>
+                        <td>${item.time}</td>
+                        <td>${item.activity}</td>
+                        <td>${item.location}</td>
+                        <td>${professorCell}</td>
+                        <td>${fellowsCell}</td>
+                    </tr>`;
+                });
+                
+                scheduleHTML += '</table>';
+                output.innerHTML = scheduleHTML;
+            } else {
+                output.innerHTML = `<p>No scheduled activities for ${day}.</p>`;
+            }
+        }
+
+        function showWeekOverview(output) {
+            let scheduleHTML = '<h2>Week Overview</h2><table>';
+            scheduleHTML += '<tr><th>Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr>';
+
+            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+            const times = ['8:00 - 8:50', '9:20 - 10:10', '10:40 - 11:30', '11:35 - 12:50', '12:00 - 12:50', '1:00 - 2:00', '1:20 - 2:35', '3:05 - 4:20', '4:50 - 6:05', '6:35 - 7:25'];
+
+            times.forEach(time => {
+                scheduleHTML += `<tr><td>${time}</td>`;
+                days.forEach(day => {
+                    const activity = schedule[day].find(item => item.time === time);
+                    if (activity) {
+                        let cellContent = `${activity.activity}<br>${activity.location}`;
+                        if (activity.type === 'TA') {
+                            cellContent += `<br>Prof: ${activity.professor}`;
+                        }
+                        scheduleHTML += `<td>${cellContent}</td>`;
+                    } else {
+                        scheduleHTML += '<td></td>';
+                    }
+                });
+                scheduleHTML += '</tr>';
+            });
+
+            scheduleHTML += '</table>';
+            output.innerHTML = scheduleHTML;
+        }
+
+        // Initialize the schedule view
+        showSchedule();
     </script>
 </body>
 </html>
