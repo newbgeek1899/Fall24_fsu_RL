@@ -3,383 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Schedule - Reyajul Hasan Leon</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        /* Styling for the clock and calendar */
-        .clock-container {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            color: #569cd6;
-        }
-
-        .calendar-container {
-            margin: 0 auto;
-            text-align: center;
-            color: #d4d4d4;
-        }
-
-        .calendar-container table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            color: #d4d4d4;
-            background-color: #252526;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .calendar-container th, .calendar-container td {
-            padding: 10px;
-            border: 1px solid #3c3c3c;
-            text-align: center;
-        }
-
-        .calendar-container th {
-            background-color: #007acc;
-            color: white;
-        }
-
-        .calendar-container td {
-            background-color: #2d2d2d;
-        }
-
-        .current-day {
-            background-color: #569cd6;
-            color: white;
-            font-weight: bold;
-        }
-
-        /* Keyframes for animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #d4d4d4;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #1e1e1e;
-            animation: fadeIn 2s ease;
-        }
-
-        h1, h2 {
-            color: #569cd6;
-            text-align: center;
-            font-family: 'Roboto', sans-serif;
-            padding-bottom: 10px;
-            animation: slideIn 1s ease-out;
-        }
-
-        .math-header {
-            text-align: center;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            font-style: italic;
-            color: #ce9178;
-            animation: slideIn 1.5s ease-out;
-        }
-
-        /* VS Code-like container with shadow */
-        #scheduleOutput, .math-container {
-            background-color: #252526;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            animation: fadeIn 1.5s ease-out;
-            color: #d4d4d4;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #3c3c3c;
-        }
-
-        th {
-            background-color: #007acc;
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        tr:nth-child(even) {
-            background-color: #2d2d2d;
-        }
-
-        tr:hover {
-            background-color: #3e3e3e;
-        }
-
-        /* Buttons with VS Code styles */
-        select, button {
-            padding: 10px;
-            font-size: 16px;
-            margin: 10px;
-            background-color: #007acc;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        select:hover, button:hover {
-            background-color: #005f99;
-            transform: scale(1.05);
-        }
-
-        /* Reminder button styling */
-        .reminder-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
+    <title>TA Task Manager for rl24c@fsu.edu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
 </head>
-<body>
-    <h1>Academic Schedule - Reyajul Hasan Leon</h1>
-    <div class="math-header">
-        \[ \frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2S^2\frac{\partial^2 V}{\partial S^2} + rS\frac{\partial V}{\partial S} - rV = 0 \]
-    </div>
-
-    <!-- Clock Container -->
-    <div class="clock-container">
-        <div id="clock"></div>
-    </div>
-
-    <!-- Calendar Container -->
-    <div class="calendar-container">
-        <h2>Calendar</h2>
-        <table id="calendar">
-            <!-- Calendar will be generated here -->
-        </table>
-    </div>
-
-    <!-- Reminder Button -->
-    <div class="reminder-container">
-        <button onclick="remindMe()">Reminder: Check Your Mail</button>
-    </div>
-
-    <div id="scheduleSelector">
-        <select id="viewSelect">
-            <option value="day">Daily View</option>
-            <option value="week">Week Overview</option>
-        </select>
-        <select id="daySelect">
-            <option value="Monday">Monday</option>
-            <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
-            <option value="Thursday">Thursday</option>
-            <option value="Friday">Friday</option>
-        </select>
-        <button onclick="showSchedule()">Display Schedule</button>
-    </div>
-
-    <div id="scheduleOutput"></div>
-
-    <div class="footnote">
-        "In mathematics you don't understand things. You just get used to them." - John von Neumann
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4">TA Task Manager for rl24c@fsu.edu</h1>
+        
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-2">Email Inbox</h2>
+            <button id="fetch-emails" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+                Fetch New Emails
+            </button>
+            <div id="email-list" class="bg-white p-4 rounded shadow">
+                <!-- Email list will be populated here -->
+            </div>
+        </div>
+        
+        <div>
+            <h2 class="text-2xl font-semibold mb-2">Task List</h2>
+            <ul id="task-list" class="bg-white p-4 rounded shadow">
+                <!-- Task list will be populated here -->
+            </ul>
+        </div>
     </div>
 
     <script>
-        // Clock Script
-        function updateClock() {
-            const clock = document.getElementById('clock');
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            clock.innerHTML = `${hours}:${minutes}:${seconds}`;
+        const userEmail = 'rl24c@fsu.edu';
+
+        // Simulated email data (in a real app, this would come from your email service)
+        let emails = [
+            { id: 1, to: userEmail, from: 'professor@fsu.edu', subject: 'Grading Assignment', body: 'Please grade the midterm exams by next Friday.' },
+            { id: 2, to: userEmail, from: 'dean@fsu.edu', subject: 'Office Hours', body: 'Remember to hold extra office hours this week.' }
+        ];
+
+        // Function to extract tasks from email body
+        function extractTasks(emailBody) {
+            const tasks = emailBody.split('.').filter(sentence => 
+                sentence.toLowerCase().includes('please') || 
+                sentence.toLowerCase().includes('remember to') ||
+                sentence.toLowerCase().includes('don\'t forget to')
+            );
+            return tasks.map(task => task.trim());
         }
 
-        setInterval(updateClock, 1000); // Update the clock every second
-        updateClock(); // Initial call to set the clock
-
-        // Calendar Script
-        function generateCalendar() {
-            const calendar = document.getElementById('calendar');
-            const now = new Date();
-            const month = now.getMonth();
-            const year = now.getFullYear();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-            // Get the day of the week of the first day of the month
-            const firstDay = new Date(year, month, 1).getDay();
-
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-            // Header
-            let calendarHTML = `<tr><th colspan="7">${monthNames[month]} ${year}</th></tr>`;
-            calendarHTML += '<tr>';
-            dayNames.forEach(day => {
-                calendarHTML += `<th>${day}</th>`;
-            });
-            calendarHTML += '</tr>';
-
-            // Days
-            let day = 1;
-            let rows = 6; // 6 rows to cover all possible weeks in a month
-            let cols = 7; // 7 columns for 7 days
-            for (let i = 0; i < rows; i++) {
-                calendarHTML += '<tr>';
-                for (let j = 0; j < cols; j++) {
-                    if (i === 0 && j < firstDay) {
-                        calendarHTML += '<td></td>'; // Empty cell before the first day
-                    } else if (day > daysInMonth) {
-                        calendarHTML += '<td></td>'; // Empty cell after the last day
-                    } else {
-                        const isToday = day === now.getDate() ? 'current-day' : '';
-                        calendarHTML += `<td class="${isToday}">${day}</td>`;
-                        day++;
-                    }
-                }
-                calendarHTML += '</tr>';
-                if (day > daysInMonth) break; // Stop loop if we've reached the end of the month
-            }
-
-            calendar.innerHTML = calendarHTML;
+        // Function to display emails
+        function displayEmails() {
+            const emailList = document.getElementById('email-list');
+            emailList.innerHTML = emails.map(email => `
+                <div class="mb-4 p-2 border-b">
+                    <h3 class="font-semibold">${email.subject}</h3>
+                    <p class="text-sm text-gray-600">From: ${email.from}</p>
+                    <p>${email.body}</p>
+                </div>
+            `).join('');
         }
 
-        generateCalendar(); // Initial call to generate the calendar
-
-        // Reminder Script
-        let reminderInterval;
-
-        function remindMe() {
-            // Open Outlook in a new tab
-            window.open('https://outlook.office365.com/mail/', '_blank');
-
-            // Request Notification permission
-            if (Notification.permission === "default") {
-                Notification.requestPermission();
-            }
-
-            // Set up periodic reminders
-            if (!reminderInterval) {
-                reminderInterval = setInterval(() => {
-                    if (Notification.permission === "granted") {
-                        new Notification("Reminder: Check your email!");
-                    }
-                }, 60000); // Remind every minute
-            }
+        // Function to display tasks
+        function displayTasks() {
+            const taskList = document.getElementById('task-list');
+            const tasks = emails.flatMap(email => extractTasks(email.body));
+            taskList.innerHTML = tasks.map(task => `
+                <li class="mb-2 p-2 bg-gray-100 rounded">
+                    <input type="checkbox" class="mr-2">
+                    ${task}
+                </li>
+            `).join('');
         }
 
-        // Schedule Script (existing functionality)
-        const schedule = {
-            Monday: [
-                { time: "9:20 - 10:10", activity: "MAP 5601: Intro to Financial Math", location: "Love 231", type: "Class" },
-                { time: "10:40 - 11:30", activity: "MAD 5403: FCM I", location: "Love 106", type: "Class" },
-                { time: "1:20 - 2:35", activity: "MAC2233 Lect 8 (TA Duty)", location: "104MOR", type: "TA", professor: "Dr. Watford", fellows: ["Prakash, Siddharth", "Parsizadeh, Pejman"] },
-                { time: "6:35 - 7:25", activity: "MAT 5939-02: Fin Math Proseminar", location: "Love", type: "Class" }
-            ],
-            Tuesday: [
-                { time: "11:35 - 12:50", activity: "STA 6346: Advanced Probability & Inference", location: "OSB 110", type: "Class" },
-                { time: "3:05 - 4:20", activity: "MAT 5939-01: Fin Math Proseminar", location: "Love 105", type: "Class" },
-                { time: "4:50 - 6:05", activity: "MAC1140 Lect 21 (TA Duty)", location: "2100HWC", type: "TA", professor: "Dr. Schillinger", fellows: ["Reid, Callie"] }
-            ],
-            Wednesday: [
-                { time: "8:00 - 8:50", activity: "MAC1140 Lab 13 (TA Duty)", location: "114HTL", type: "TA", professor: "Dr. Wilk", fellows: ["Jennetten, Gustav (Gus)"] },
-                { time: "9:20 - 10:10", activity: "MAP 5601: Intro to Financial Math", location: "Love 231", type: "Class" },
-                { time: "10:40 - 11:30", activity: "MAD 5403: FCM I", location: "Love 106", type: "Class" },
-                { time: "1:20 - 2:10", activity: "MAC1140 Lab 26 (TA Duty)", location: "107MCH", type: "TA", professor: "Dr. Schillinger", fellows: ["Ohanian, Charles"] },
-                { time: "3:05 - 3:55", activity: "MAC1140 Lab 27 (TA Duty)", location: "107MCH", type: "TA", professor: "Dr. Schillinger", fellows: ["Ohanian, Charles"] }
-            ],
-            Thursday: [
-                { time: "11:35 - 12:50", activity: "STA 6346: Advanced Probability & Inference", location: "OSB 110", type: "Class" },
-                { time: "1:00 - 2:00", activity: "Office Hours", location: "TBA", type: "Office Hours" }
-            ],
-            Friday: [
-                { time: "8:00 - 8:50", activity: "MAC2233 Lab 10 (TA Duty)", location: "105HTL", type: "TA", professor: "Dr. Watford", fellows: ["Lyu, Shiyi"] },
-                { time: "9:20 - 10:10", activity: "MAP 5601: Intro to Financial Math", location: "Love 231", type: "Class" },
-                { time: "10:40 - 11:30", activity: "MAD 5403: FCM I", location: "Love 106", type: "Class" },
-                { time: "12:00 - 12:50", activity: "MAC2233 Lab 15 (TA Duty)", location: "104HTL", type: "TA", professor: "Dr. Watford", fellows: ["Heeralu Pathirannehelage, Samadhi Lochana Premasiri"] },
-                { time: "1:20 - 2:10", activity: "MAC2233 Lab 17 (TA Duty)", location: "104HTL", type: "TA", professor: "Dr. Watford", fellows: ["Hill, Devan"] },
-                { time: "3:00 - 4:00", activity: "Office Hours", location: "TBA", type: "Office Hours" }
-            ]
-        };
-
-        function showSchedule() {
-            const viewType = document.getElementById('viewSelect').value;
-            const day = document.getElementById('daySelect').value;
-            const output = document.getElementById('scheduleOutput');
-
-            if (viewType === 'day') {
-                showDaySchedule(day, output);
-            } else {
-                showWeekOverview(output);
-            }
+        // Function to simulate fetching new emails
+        function fetchNewEmails() {
+            const newEmail = {
+                id: emails.length + 1,
+                to: userEmail,
+                from: `professor${emails.length + 1}@fsu.edu`,
+                subject: `New Task ${emails.length + 1}`,
+                body: `Please complete the following task: Task ${emails.length + 1}.`
+            };
+            emails.push(newEmail);
+            displayEmails();
+            displayTasks();
         }
 
-        function showDaySchedule(day, output) {
-            const daySchedule = schedule[day];
+        // Initialize the app
+        displayEmails();
+        displayTasks();
 
-            if (daySchedule && daySchedule.length > 0) {
-                let scheduleHTML = `<h2>Schedule for ${day}</h2><table>`;
-                scheduleHTML += '<tr><th>Time</th><th>Activity</th><th>Location</th><th>Professor</th><th>Fellow TAs</th></tr>';
-                
-                daySchedule.forEach(item => {
-                    let professorCell = item.professor || '';
-                    let fellowsCell = item.fellows ? item.fellows.join(', ') : '';
-                    scheduleHTML += `<tr>
-                        <td>${item.time}</td>
-                        <td>${item.activity}</td>
-                        <td>${item.location}</td>
-                        <td>${professorCell}</td>
-                        <td>${fellowsCell}</td>
-                    </tr>`;
-                });
-                
-                scheduleHTML += '</table>';
-                output.innerHTML = scheduleHTML;
-            } else {
-                output.innerHTML = `<p>No scheduled activities for ${day}.</p>`;
-            }
-        }
-
-        function showWeekOverview(output) {
-            let scheduleHTML = '<h2>Week Overview</h2><table>';
-            scheduleHTML += '<tr><th>Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr>';
-
-            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-            const times = ['8:00 - 8:50', '9:20 - 10:10', '10:40 - 11:30', '11:35 - 12:50', '12:00 - 12:50', '1:00 - 2:00', '1:20 - 2:35', '3:05 - 4:20', '4:50 - 6:05', '6:35 - 7:25'];
-
-            times.forEach(time => {
-                scheduleHTML += `<tr><td>${time}</td>`;
-                days.forEach(day => {
-                    const activity = schedule[day].find(item => item.time === time);
-                    if (activity) {
-                        let cellContent = `${activity.activity}<br>${activity.location}`;
-                        if (activity.type === 'TA') {
-                            cellContent += `<br>Prof: ${activity.professor}`;
-                        }
-                        scheduleHTML += `<td>${cellContent}</td>`;
-                    } else {
-                        scheduleHTML += '<td></td>';
-                    }
-                });
-                scheduleHTML += '</tr>';
-            });
-
-            scheduleHTML += '</table>';
-            output.innerHTML = scheduleHTML;
-        }
-
-        // Initialize the schedule view
-        showSchedule();
+        // Add event listener to the fetch emails button
+        document.getElementById('fetch-emails').addEventListener('click', fetchNewEmails);
     </script>
 </body>
 </html>
